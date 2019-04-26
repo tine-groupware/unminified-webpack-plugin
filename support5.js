@@ -87,9 +87,12 @@ class UnminifiedWebpackPlugin {
               );
             }
 
-            const sourceCode = matchedBanners.length
+            let sourceCode = matchedBanners.length
               ? bannerPlugin.banner(bannerPlugin.options) + source.source()
               : source.source();
+
+            // rewrite chunk names
+            sourceCode = sourceCode.replace(/(\/\*\*\*\*\*\*\/\s+return __webpack_require__\.p \+.*\.)(js|css)"/, '$1' + (this.options.postfix || 'nomin') + '.$2";');
 
             const dest = compiler.options.output.path;
             const outputPath = path.resolve(
