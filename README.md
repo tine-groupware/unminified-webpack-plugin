@@ -58,6 +58,8 @@ By doing as above, you will get two files `library.min.js` and `library.js`. No 
 
 `postfix`: you can specify the `nomin` part as you wish. `nomin` is the default postfix once you haven't specify `min` in `output.filename`. And it can be customized by specifying this option, following is example:
 
+`replace`: you can specify an array of `String.replace` arguments to be applied to the sourceCode. This is useful if you need some replacements in the unminified build type (e.g. a buildtype constant from define plugin)
+
 ```javascript
 const path = require('path');
 const webpack = require('webpack');
@@ -74,6 +76,9 @@ module.exports = {
     plugins: [
         new UnminifiedWebpackPlugin({
             postfix: 'unmin',//specify "nomin" postfix
+            replace: [
+                [/(BUILD_TYPE\s*=\s*)'RELEASE'/, "$1'DEBUG'"]
+            ],
             include: /polyfill.*/,
             exclude: /test.*/
         })

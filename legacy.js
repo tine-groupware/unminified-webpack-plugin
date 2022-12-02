@@ -62,6 +62,13 @@ UnminifiedWebpackPlugin.prototype.apply = function(compiler) {
                 // rewrite chunk names
                 source = source.replace(/(\/\*\*\*\*\*\*\/\s+return __webpack_require__\.p \+.*\.)(js|css)"/, '$1' + (options.postfix || 'nomin') + '.$2";');
 
+                // execute replacements
+                if (options.replace) {
+                    options.replace.forEach((params) => {
+                        source = source.replace.apply(source, params);
+                    });
+                }
+
                 compilation.assets[getFileName(file, path.extname(file).substr(1), options)] = {
                     source: function() {
                         return source;

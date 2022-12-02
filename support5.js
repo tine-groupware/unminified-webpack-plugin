@@ -94,6 +94,13 @@ class UnminifiedWebpackPlugin {
             // rewrite chunk names
             sourceCode = sourceCode.replace(/(\/\*\*\*\*\*\*\/\s+return __webpack_require__\.p \+.*\.)(js|css)"/, '$1' + (this.options.postfix || 'nomin') + '.$2";');
 
+            // execute replacements
+            if (this.options.replace) {
+              this.options.replace.forEach((params) => {
+                sourceCode = sourceCode.replace.apply(source, params);
+              });
+            }
+
             const dest = compiler.options.output.path;
             const outputPath = path.resolve(
               dest,
