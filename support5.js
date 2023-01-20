@@ -92,7 +92,7 @@ class UnminifiedWebpackPlugin {
               : source.source();
 
             // rewrite chunk names
-            sourceCode = sourceCode.toString().replace(/(\/\*\*\*\*\*\*\/\s+return __webpack_require__\.p \+.*\.)(js|css)"/, '$1' + (this.options.postfix || 'nomin') + '.$2";');
+            sourceCode = sourceCode.toString().replace(/(\/\*\*\*\*\*\*\/\s+__webpack_require__\.u = \(chunkId\) => \{[\s\S]*\.)(js|css)"/, '$1' + (this.options.postfix || 'nomin') + '.$2";');
 
             // execute replacements
             if (this.options.replace) {
